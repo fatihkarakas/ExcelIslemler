@@ -63,13 +63,14 @@ namespace ExcelIslemler
                         }
                         //System.Data.DataTable dtExcel = ReadExcel(dlg.FileName); //excel okumaya başla
                         ExcelSonucView.Visible = true;
-                      
+
 
 
                     }
                     else
                     {
-                        MessageBox.Show("Lütfen excel dosyası seçimi yapınız", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                        MessageBox.Show($"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım :  {dlg.FileName} dosyasını seçtün", "Layynn Bir Bak Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                     Cursor.Current = Cursors.Default;
                     button1.Visible = true;
@@ -96,33 +97,40 @@ namespace ExcelIslemler
             List<VeriKontrol> veri = new List<VeriKontrol>();
             foreach (DataGridViewRow item in ExcelSonucView.Rows)
             {
+
                 sat++;
                 if (sat < satir)
                 {
-                    VeriKontrol hastane = new VeriKontrol();
-                    hastane.KurumAdi = Convert.ToString(item.Cells[2].Value);
-                    hastane.Kisi = Convert.ToString(item.Cells[1].Value);
-                    hastane.Iban = Convert.ToString(item.Cells[5].Value);
-                    hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
-                    //MessageBox.Show(item.Cells[6].Value.ToString());
-                    hastane.OdemeTutar = Convert.ToDouble(item.Cells[6].Value);
-                    if (veri.Contains(veri.Find(a => a.KurumAdi == hastane.KurumAdi)))
+                    try
                     {
-                        //MessageBox.Show($"{hastane.KurumAdi} kaydı vardır");
-                        listView1.Items.Add($"{hastane.KurumAdi} kaydı tekrarlandı");
-                        var hst = veri.FirstOrDefault(a => a.KurumAdi == hastane.KurumAdi);
-                        hst.OdemeTutar += hastane.OdemeTutar;
-                        hst.Kactane++;
+                        VeriKontrol hastane = new VeriKontrol();
+                        hastane.KurumAdi = Convert.ToString(item.Cells[2].Value);
+                        hastane.Kisi = Convert.ToString(item.Cells[1].Value);
+                        hastane.Iban = Convert.ToString(item.Cells[5].Value);
+                        hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
+                        //MessageBox.Show(item.Cells[6].Value.ToString());
+                        hastane.OdemeTutar = Convert.ToDouble(item.Cells[6].Value);
+                        if (veri.Contains(veri.Find(a => a.KurumAdi == hastane.KurumAdi)))
+                        {
+                            //MessageBox.Show($"{hastane.KurumAdi} kaydı vardır");
+                            listView1.Items.Add($"{hastane.KurumAdi} kaydı tekrarlandı");
+                            var hst = veri.FirstOrDefault(a => a.KurumAdi == hastane.KurumAdi);
+                            hst.OdemeTutar += hastane.OdemeTutar;
+                            hst.Kactane++;
 
+                        }
+                        else
+                        {
+                            veri.Add(hastane);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        veri.Add(hastane);
+                        MessageBox.Show($"Seçtiğiniz Excel Dosyası DTO çevirme formatına uygun değil \n{ex.Message}", "Dosya İşlemede hata oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
+
                 }
-
-
-                //  MessageBox.Show(hastane.KurumAdi);
 
 
             }
@@ -150,11 +158,14 @@ namespace ExcelIslemler
                 dt.hesapNo = item.Iban;
                 dTOs.Add(dt);
             }
-            var ToplmPara = dTOs.Sum(a=> a.miktar)   ;
+            var ToplmPara = dTOs.Sum(a => a.miktar);
             listView1.Items.Add($"Bu DTO dosyasında ödenecek toplam miktar {ToplmPara} TL dir");
             ExcelSonucView.DataSource = dTOs;
             button2.Visible = true;
         }
+
+
+
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -181,8 +192,8 @@ namespace ExcelIslemler
                 {
                     using (SaveFileDialog sf = new SaveFileDialog() { Filter = "Excel Sayfası |*.xlsx" })
                     {
-                       
-                        if(sf.ShowDialog() == DialogResult.OK)
+
+                        if (sf.ShowDialog() == DialogResult.OK)
                         {
                             using (XLWorkbook wb = new XLWorkbook())
                             {
@@ -194,9 +205,9 @@ namespace ExcelIslemler
                                 listView1.Items.Add($"DTO excel dosyanız {Klasör}  adresine kayıt edildi");
                             }
                         }
-                       
+
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {

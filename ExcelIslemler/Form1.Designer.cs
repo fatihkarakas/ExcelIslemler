@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.ExcelBtn = new System.Windows.Forms.Button();
             this.ExcelSonucView = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
@@ -104,6 +105,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ExcelSonucView);
             this.Controls.Add(this.ExcelBtn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "DTO Dosyası Oluştur";
             ((System.ComponentModel.ISupportInitialize)(this.ExcelSonucView)).EndInit();
