@@ -150,6 +150,8 @@ namespace ExcelIslemler
                 dt.hesapNo = item.Iban;
                 dTOs.Add(dt);
             }
+            var ToplmPara = dTOs.Sum(a=> a.miktar)   ;
+            listView1.Items.Add($"Bu DTO dosyasında ödenecek toplam miktar {ToplmPara} TL dir");
             ExcelSonucView.DataSource = dTOs;
             button2.Visible = true;
         }
