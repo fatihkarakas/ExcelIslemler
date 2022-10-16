@@ -85,16 +85,7 @@ namespace ExcelIslemler
 
         }
 
-        //private System.Data.DataTable   ReadExcel(string ExcelAdres)
-        //{
 
-
-        //   //WorkBook  workBook = WorkBook.Load(ExcelAdres);
-
-        //   // string sayfaAdi = workBook.DefaultWorkSheet.ToString();
-        //   // WorkSheet worksheet = workBook.DefaultWorkSheet;
-        //    return DataTable;
-        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -188,20 +179,17 @@ namespace ExcelIslemler
                 {
                     using (SaveFileDialog sf = new SaveFileDialog() { Filter = "Excel Sayfası |*.xlsx" })
                     {
-                        //string folderPath = "C:\\Excel\\";
-                        //if (!Directory.Exists(folderPath))
-                        //{
-                        //    Directory.CreateDirectory(folderPath);
-                        //}
+                       
                         if(sf.ShowDialog() == DialogResult.OK)
                         {
                             using (XLWorkbook wb = new XLWorkbook())
                             {
                                 wb.Worksheets.Add(dt, "Dto Listesi");
                                 wb.SaveAs(sf.FileName);
+                                var Klasör = Path.GetFullPath(sf.FileName);
                                 //MessageBox.Show($"DTO excel dosyanız {folderPath} klasörüne Dtos{DateTime.Now.ToShortDateString()}.xlsx adıyla kayıt edildi", "İşlem Tamam", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                MessageBox.Show($"DTO excel dosyanız {Path.GetFileName(sf.FileName)} klasörüne Dtos{sf.FileName} adıyla kayıt edildi", "İşlem Tamam", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                MessageBox.Show($"DTO excel dosyanız {Klasör}  adresine kayıt edildi", "İşlem Tamam", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                listView1.Items.Add($"DTO excel dosyanız {Klasör}  adresine kayıt edildi");
                             }
                         }
                        

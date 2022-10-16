@@ -48,16 +48,18 @@
             // 
             // ExcelSonucView
             // 
+            this.ExcelSonucView.AccessibleRole = System.Windows.Forms.AccessibleRole.Cursor;
             this.ExcelSonucView.AllowUserToAddRows = false;
             this.ExcelSonucView.AllowUserToDeleteRows = false;
-            this.ExcelSonucView.AllowUserToResizeColumns = false;
+            this.ExcelSonucView.AllowUserToOrderColumns = true;
+            this.ExcelSonucView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
             this.ExcelSonucView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
             this.ExcelSonucView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ExcelSonucView.Location = new System.Drawing.Point(2, 53);
             this.ExcelSonucView.Name = "ExcelSonucView";
             this.ExcelSonucView.RowHeadersWidth = 35;
             this.ExcelSonucView.RowTemplate.Height = 24;
-            this.ExcelSonucView.Size = new System.Drawing.Size(895, 412);
+            this.ExcelSonucView.Size = new System.Drawing.Size(968, 412);
             this.ExcelSonucView.TabIndex = 1;
             this.ExcelSonucView.Visible = false;
             // 
@@ -89,14 +91,14 @@
             this.listView1.ItemHeight = 16;
             this.listView1.Location = new System.Drawing.Point(2, 472);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(895, 84);
+            this.listView1.Size = new System.Drawing.Size(968, 84);
             this.listView1.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(911, 581);
+            this.ClientSize = new System.Drawing.Size(982, 605);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
