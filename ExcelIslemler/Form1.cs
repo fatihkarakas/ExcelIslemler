@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace ExcelIslemler
     public partial class Form1 : Form
     {
         public string fisAciklama;
+        public string Baglanti = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\FatihKARAKAS\source\repos\ExcelIslemler\ExcelIslemler\Bankalar.mdf;Integrated Security = True";
         public Form1()
         {
 
@@ -69,7 +71,12 @@ namespace ExcelIslemler
                     }
                     else
                     {
-                        MessageBox.Show($"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım :  {dlg.FileName} dosyasını seçtün", "Layynn Bir Bak Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        ErtoHata erto = new ErtoHata();
+                        erto.hatBaslik = $"Layynn Bir Bak Hata Oluştu";
+                        erto.hatMesaj = $"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım: {dlg.FileName}  dosyasını seçtün";
+                        erto.Show();
+                       
+                      //  MessageBox.Show($"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım :  {dlg.FileName} dosyasını seçtün", "Layynn Bir Bak Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     Cursor.Current = Cursors.Default;
@@ -171,6 +178,25 @@ namespace ExcelIslemler
         {
             if (ExcelSonucView.Rows.Count > 1)
             {
+                DataSet Ds = new DataSet();
+                SqlDataAdapter DT = new SqlDataAdapter();
+                List<HastaneAdi> KurumAdlari = new List<HastaneAdi>();
+                SqlConnection sqlBaglan = new SqlConnection(Baglanti);
+                sqlBaglan.Open();
+                DT=new SqlDataAdapter("select * from HastaneIsmi", Baglanti) ;
+                DT.Fill(Ds, "HastaneAdlari");
+                DT.Dispose();
+                sqlBaglan.Close();
+                foreach (var item in Ds.Tables["HastaneAdlari"].Rows)
+                {
+                    HastaneAdi h = new HastaneAdi()
+                    {
+                        Id = (int)item[0],
+                        HstKaurumAdi = item[1].ToString();
+                    };
+                }
+
+
                 DataTable dt = new DataTable();
 
                 //Adding the Columns
@@ -217,6 +243,11 @@ namespace ExcelIslemler
 
 
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }
