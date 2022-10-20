@@ -39,9 +39,10 @@
             // 
             // ExcelBtn
             // 
-            this.ExcelBtn.Location = new System.Drawing.Point(33, 12);
+            this.ExcelBtn.Location = new System.Drawing.Point(25, 10);
+            this.ExcelBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ExcelBtn.Name = "ExcelBtn";
-            this.ExcelBtn.Size = new System.Drawing.Size(170, 35);
+            this.ExcelBtn.Size = new System.Drawing.Size(128, 28);
             this.ExcelBtn.TabIndex = 0;
             this.ExcelBtn.Text = "Excel Dosyasını Seç";
             this.ExcelBtn.UseVisualStyleBackColor = true;
@@ -56,19 +57,21 @@
             this.ExcelSonucView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCellsExceptHeader;
             this.ExcelSonucView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedHeaders;
             this.ExcelSonucView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ExcelSonucView.Location = new System.Drawing.Point(2, 53);
+            this.ExcelSonucView.Location = new System.Drawing.Point(2, 43);
+            this.ExcelSonucView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ExcelSonucView.Name = "ExcelSonucView";
             this.ExcelSonucView.RowHeadersWidth = 35;
             this.ExcelSonucView.RowTemplate.Height = 24;
-            this.ExcelSonucView.Size = new System.Drawing.Size(968, 412);
+            this.ExcelSonucView.Size = new System.Drawing.Size(726, 335);
             this.ExcelSonucView.TabIndex = 1;
             this.ExcelSonucView.Visible = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(210, 12);
+            this.button1.Location = new System.Drawing.Point(158, 10);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 34);
+            this.button1.Size = new System.Drawing.Size(128, 28);
             this.button1.TabIndex = 2;
             this.button1.Text = "DTO İşlemi Yap";
             this.button1.UseVisualStyleBackColor = true;
@@ -77,9 +80,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(391, 16);
+            this.button2.Location = new System.Drawing.Point(293, 13);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(171, 29);
+            this.button2.Size = new System.Drawing.Size(128, 24);
             this.button2.TabIndex = 3;
             this.button2.Text = "Excel DTO Oluştur";
             this.button2.UseVisualStyleBackColor = true;
@@ -89,25 +93,27 @@
             // listView1
             // 
             this.listView1.FormattingEnabled = true;
-            this.listView1.ItemHeight = 16;
-            this.listView1.Location = new System.Drawing.Point(2, 472);
+            this.listView1.Location = new System.Drawing.Point(2, 384);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(968, 84);
+            this.listView1.Size = new System.Drawing.Size(727, 95);
             this.listView1.TabIndex = 4;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(982, 605);
+            this.ClientSize = new System.Drawing.Size(736, 492);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ExcelSonucView);
             this.Controls.Add(this.ExcelBtn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "DTO Dosyası Oluştur";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ExcelSonucView)).EndInit();
             this.ResumeLayout(false);
 
