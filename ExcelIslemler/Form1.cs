@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -14,7 +15,8 @@ namespace ExcelIslemler
     public partial class Form1 : Form
     {
         public string fisAciklama;
-        public string Baglanti = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\FatihKARAKAS\source\repos\ExcelIslemler\ExcelIslemler\Bankalar.mdf;Integrated Security = True";
+        public string test = ConfigurationManager.ConnectionStrings["ExcelIslemler.Properties.Settings.BankalarConnectionString"].ConnectionString;
+        public string Baglanti = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Bankalar.mdf;Integrated Security=True";
         public Form1()
         {
 
@@ -75,8 +77,8 @@ namespace ExcelIslemler
                         erto.hatBaslik = $"Layynn Bir Bak Hata Oluştu";
                         erto.hatMesaj = $"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım: {dlg.FileName}  dosyasını seçtün";
                         erto.Show();
-                       
-                      //  MessageBox.Show($"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım :  {dlg.FileName} dosyasını seçtün", "Layynn Bir Bak Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        //  MessageBox.Show($"Ağzını kırdığım seçtğin dosya excel mi bir bak bakalım :  {dlg.FileName} dosyasını seçtün", "Layynn Bir Bak Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     Cursor.Current = Cursors.Default;
@@ -101,20 +103,49 @@ namespace ExcelIslemler
             var kactane = ExcelSonucView.ColumnCount;
             var satir = ExcelSonucView.RowCount;
             int sat = 0;
+            DataSet Ds = new DataSet();
+            SqlDataAdapter DT = new SqlDataAdapter();
+            List<HastaneAdi> KurumAdlari = new List<HastaneAdi>();
+            SqlConnection sqlBaglan = new SqlConnection(Baglanti);
+            sqlBaglan.Open();
+            DT = new SqlDataAdapter("select * from HastaneIsmi", Baglanti);
+            DT.Fill(Ds, "HastaneAdlari");
+            DT.Dispose();
+            sqlBaglan.Close();
+            foreach (DataRow item in Ds.Tables["HastaneAdlari"].Rows)
+            {
+                HastaneAdi h = new HastaneAdi()
+                {
+                    Id = (int)item[0],
+                    HstKaurumAdi = item[1].ToString(),
+                    vknNo = item[2].ToString(),
+                };
+                KurumAdlari.Add(h);
+            }
+
             List<VeriKontrol> veri = new List<VeriKontrol>();
             foreach (DataGridViewRow item in ExcelSonucView.Rows)
             {
 
                 sat++;
-                if (sat < satir)
+                if (sat <= satir)
                 {
                     try
                     {
                         VeriKontrol hastane = new VeriKontrol();
-                        hastane.KurumAdi = Convert.ToString(item.Cells[2].Value);
+                        hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
+                        if (KurumAdlari.Contains(KurumAdlari.Find(x => x.vknNo == hastane.VegiKimlikNo)))
+                        {
+                            hastane.KurumAdi = KurumAdlari.FirstOrDefault(x => x.vknNo == hastane.VegiKimlikNo).HstKaurumAdi;
+                            listView1.Items.Add($"{Convert.ToString(item.Cells[2].Value)} hastane adı {hastane.KurumAdi} olarak değiştirildi.." );
+                        }
+                        else
+                        {
+                            hastane.KurumAdi = Convert.ToString(item.Cells[2].Value);
+                        }
                         hastane.Kisi = Convert.ToString(item.Cells[1].Value);
                         hastane.Iban = Convert.ToString(item.Cells[5].Value);
-                        hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
+
                         //MessageBox.Show(item.Cells[6].Value.ToString());
                         hastane.OdemeTutar = Convert.ToDouble(item.Cells[6].Value);
                         if (veri.Contains(veri.Find(a => a.KurumAdi == hastane.KurumAdi)))
@@ -154,12 +185,15 @@ namespace ExcelIslemler
             ExcelSonucView.DataSource = veri;
             List<DTO> dTOs = new List<DTO>();
             DateTime date = DateTime.Now;
+            string HangiHast = Prompt.ShowDialog("Hangi hastane için işlem yapılacak :", "Hastane Seçiniz");
+            string OdemeTur = Prompt.ShowDialog("Ödeme Türünü yazınız :", "Ödeme Seçiniz");
+
             foreach (var item in veri)
             {
                 DTO dt = new DTO();
                 dt.ilgili = item.KurumAdi;
                 dt.vkn = item.VegiKimlikNo;
-                dt.aciklama = item.Kactane == 1 ? $"ANKARA ŞEHİR HST. TEMEL EK ÖDEME {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kisi.ToUpper()} " : $"ANKARA ŞEHİR HST. TEMEL EK ÖDEME {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kactane} KİŞİ";
+                dt.aciklama = item.Kactane == 1 ? $"{HangiHast} {OdemeTur} {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kisi.ToUpper()} " : $"{HangiHast} {OdemeTur} {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kactane} KİŞİ";
                 dt.miktar = item.OdemeTutar;
                 dt.fisNo = "";
                 dt.hesapNo = item.Iban;
@@ -178,24 +212,6 @@ namespace ExcelIslemler
         {
             if (ExcelSonucView.Rows.Count > 1)
             {
-                DataSet Ds = new DataSet();
-                SqlDataAdapter DT = new SqlDataAdapter();
-                List<HastaneAdi> KurumAdlari = new List<HastaneAdi>();
-                SqlConnection sqlBaglan = new SqlConnection(Baglanti);
-                sqlBaglan.Open();
-                DT=new SqlDataAdapter("select * from HastaneIsmi", Baglanti) ;
-                DT.Fill(Ds, "HastaneAdlari");
-                DT.Dispose();
-                sqlBaglan.Close();
-                foreach (var item in Ds.Tables["HastaneAdlari"].Rows)
-                {
-                    HastaneAdi h = new HastaneAdi()
-                    {
-                        Id = (int)item[0],
-                        HstKaurumAdi = item[1].ToString();
-                    };
-                }
-
 
                 DataTable dt = new DataTable();
 
@@ -247,7 +263,19 @@ namespace ExcelIslemler
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void hakkındaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hakkinda h = new Hakkinda();
+            h.Show();
+        }
+
+        private void hastaneİsimleriToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HastaneIsımler h = new HastaneIsımler();
+            h.Show();
         }
     }
 }

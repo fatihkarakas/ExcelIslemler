@@ -12,10 +12,12 @@ using System.Windows.Forms;
 
 namespace ExcelIslemler
 {
+    
     public partial class ErtoHata : Form
     {
         public string hatMesaj { get; set; }
         public string hatBaslik { get; set; }
+        public SoundPlayer ses = new SoundPlayer($"{Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}\\Image\\mp3indirdur-Orhan-Gencebay-Hatasiz-Kul-Olmaz.wav");
         public ErtoHata()
         {
             InitializeComponent();
@@ -24,11 +26,16 @@ namespace ExcelIslemler
 
         private void ErtoHata_Load(object sender, EventArgs e)
         {
-            var test = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            SoundPlayer ses = new SoundPlayer($"{test}\\mp3indirdur-Orhan-Gencebay-Hatasiz-Kul-Olmaz.wav");
+           
+            
             ses.Play();
             label1.Text = hatMesaj;
             label2.Text = hatBaslik;
+        }
+
+        private void ErtoHata_FormClosed(object sender, FormClosedEventArgs e)
+        {
+                ses.Stop();
         }
     }
 }
