@@ -133,6 +133,7 @@ namespace ExcelIslemler
                     try
                     {
                         VeriKontrol hastane = new VeriKontrol();
+                        hastane.Banka = Convert.ToString(item.Cells[4].Value);
                         hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
                         if (KurumAdlari.Contains(KurumAdlari.Find(x => x.vknNo == hastane.VegiKimlikNo)))
                         {
@@ -145,7 +146,7 @@ namespace ExcelIslemler
                         }
                         hastane.Kisi = Convert.ToString(item.Cells[1].Value);
                         hastane.Iban = Convert.ToString(item.Cells[5].Value);
-
+                       
                         //MessageBox.Show(item.Cells[6].Value.ToString());
                         hastane.OdemeTutar = Convert.ToDouble(item.Cells[6].Value);
                         if (veri.Contains(veri.Find(a => a.KurumAdi == hastane.KurumAdi)))
@@ -187,13 +188,16 @@ namespace ExcelIslemler
             DateTime date = DateTime.Now;
             string HangiHast = Prompt.ShowDialog("Hangi hastane için işlem yapılacak :", "Hastane Seçiniz");
             string OdemeTur = Prompt.ShowDialog("Ödeme Türünü yazınız :", "Ödeme Seçiniz");
+            string HangiAy = Prompt.ShowDialog("Ödeme Ayı:", "Ödeme Ayı Seçiniz");
+            if (HangiAy == ""|| HangiAy == null) HangiAy = date.ToString("MMMM");
 
             foreach (var item in veri)
             {
                 DTO dt = new DTO();
+                dt.banka = item.Banka;
                 dt.ilgili = item.KurumAdi;
                 dt.vkn = item.VegiKimlikNo;
-                dt.aciklama = item.Kactane == 1 ? $"{HangiHast} {OdemeTur} {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kisi.ToUpper()} " : $"{HangiHast} {OdemeTur} {DateTime.Now.Year} : {date.ToString("MMMM")} {item.Kactane} KİŞİ";
+                dt.aciklama = item.Kactane == 1 ? $"{HangiHast} {OdemeTur} {HangiAy} / {DateTime.Now.Year}   {item.Kisi.ToUpper()} " : $"{HangiHast} {OdemeTur}{HangiAy} / {DateTime.Now.Year}  {item.Kactane} KİŞİ";
                 dt.miktar = item.OdemeTutar;
                 dt.fisNo = "";
                 dt.hesapNo = item.Iban;
