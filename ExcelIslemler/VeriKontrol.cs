@@ -18,6 +18,7 @@ namespace ExcelIslemler
 
         public string VegiKimlikNo { get; set; }
         public string Iban { get; set; }
+        public string extra { get; set; } 
    
     }
 }

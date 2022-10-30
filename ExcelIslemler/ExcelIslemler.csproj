@@ -119,6 +119,7 @@
       <DependentUpon>BankalarDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="DTO.cs" />
+    <Compile Include="dtoContext.cs" />
     <Compile Include="ErtoHata.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +139,7 @@
       <DependentUpon>Hakkinda.cs</DependentUpon>
     </Compile>
     <Compile Include="HastaneAdi.cs" />
+    <Compile Include="HastaneBilgi.cs" />
     <Compile Include="HastaneIsımler.cs">
       <SubType>Form</SubType>
     </Compile>

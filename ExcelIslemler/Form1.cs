@@ -15,6 +15,7 @@ namespace ExcelIslemler
     public partial class Form1 : Form
     {
         public string fisAciklama;
+        dtoContext DtoContext;
         public string test = ConfigurationManager.ConnectionStrings["ExcelIslemler.Properties.Settings.BankalarConnectionString"].ConnectionString;
         public string Baglanti = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Bankalar.mdf;Integrated Security=True";
         public Form1()
@@ -99,29 +100,15 @@ namespace ExcelIslemler
 
         private void button1_Click(object sender, EventArgs e)
         {
+            DtoContext = new dtoContext();
             System.Data.DataTable ds = new System.Data.DataTable();
             var kactane = ExcelSonucView.ColumnCount;
             var satir = ExcelSonucView.RowCount;
             int sat = 0;
             DataSet Ds = new DataSet();
             SqlDataAdapter DT = new SqlDataAdapter();
-            List<HastaneAdi> KurumAdlari = new List<HastaneAdi>();
-            SqlConnection sqlBaglan = new SqlConnection(Baglanti);
-            sqlBaglan.Open();
-            DT = new SqlDataAdapter("select * from HastaneIsmi", Baglanti);
-            DT.Fill(Ds, "HastaneAdlari");
-            DT.Dispose();
-            sqlBaglan.Close();
-            foreach (DataRow item in Ds.Tables["HastaneAdlari"].Rows)
-            {
-                HastaneAdi h = new HastaneAdi()
-                {
-                    Id = (int)item[0],
-                    HstKaurumAdi = item[1].ToString(),
-                    vknNo = item[2].ToString(),
-                };
-                KurumAdlari.Add(h);
-            }
+            List<HastaneBilgi> KurumAdlari = DtoContext.HastaneBilgi.ToList();
+           
 
             List<VeriKontrol> veri = new List<VeriKontrol>();
             foreach (DataGridViewRow item in ExcelSonucView.Rows)
@@ -135,14 +122,28 @@ namespace ExcelIslemler
                         VeriKontrol hastane = new VeriKontrol();
                         hastane.Banka = Convert.ToString(item.Cells[4].Value);
                         hastane.VegiKimlikNo = Convert.ToString(item.Cells[3].Value);
-                        if (KurumAdlari.Contains(KurumAdlari.Find(x => x.vknNo == hastane.VegiKimlikNo)))
+                        int s = KurumAdlari.Where(x => x.Vkn.Contains(hastane.VegiKimlikNo)).ToList().Count;
+                        if (s >0 && hastane.VegiKimlikNo !="")
                         {
-                            hastane.KurumAdi = KurumAdlari.FirstOrDefault(x => x.vknNo == hastane.VegiKimlikNo).HstKaurumAdi;
+                           
+                            if (s > 1)
+                            {
+                                hastane.extra += $" {hastane.VegiKimlikNo} vergi kimlik numarası {s} tekrar edilmiş.";
+                                listView1.Items.Add($" {hastane.VegiKimlikNo} vergi kimlik numarası {s} tekrar edilmiş.");
+                            }
+                            else
+                            {
+                                hastane.extra += "OK";
+                            }
+                            hastane.KurumAdi = KurumAdlari.FirstOrDefault(x => x.Vkn.Contains(hastane.VegiKimlikNo)).KurumAdi;
                             listView1.Items.Add($"{Convert.ToString(item.Cells[2].Value)} hastane adı {hastane.KurumAdi} olarak değiştirildi.." );
                         }
                         else
                         {
                             hastane.KurumAdi = Convert.ToString(item.Cells[2].Value);
+                            listView1.Items.Add($"{hastane.KurumAdi} için kullanılan bu {hastane.VegiKimlikNo} bankada kayıtlı değil");
+                            hastane.extra = $"{hastane.KurumAdi} için kullanılan bu {hastane.VegiKimlikNo} bankada kayıtlı değil";
+                            //MessageBox.Show($"{hastane.KurumAdi} için kullanılan bu {hastane.VegiKimlikNo} bankada kayıtlı değil");
                         }
                         hastane.Kisi = Convert.ToString(item.Cells[1].Value);
                         hastane.Iban = Convert.ToString(item.Cells[5].Value);
@@ -201,6 +202,7 @@ namespace ExcelIslemler
                 dt.miktar = item.OdemeTutar;
                 dt.fisNo = "";
                 dt.hesapNo = item.Iban;
+                dt.extralar = item.extra;
                 dTOs.Add(dt);
             }
             var ToplmPara = dTOs.Sum(a => a.miktar);

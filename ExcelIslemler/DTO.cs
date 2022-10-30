@@ -18,6 +18,7 @@ namespace ExcelIslemler
         
         public string   hesapNo { get; set; }   
       
+        public string extralar { get; set; }
 
 
     }
