@@ -8,7 +8,8 @@ namespace ExcelIslemler
 {
     internal class DTO
     {
-        
+
+        public string banka { get; set; }
         public string ilgili { get; set; }
         public string vkn { get; set; } 
         public string aciklama { get; set; }  
@@ -16,6 +17,8 @@ namespace ExcelIslemler
         public double miktar { get; set; } 
         
         public string   hesapNo { get; set; }   
+      
+        public string extralar { get; set; }
 
 
     }

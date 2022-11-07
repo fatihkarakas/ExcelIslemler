@@ -8,6 +8,7 @@ namespace ExcelIslemler
 {
     internal class VeriKontrol
     {
+        public string Banka { get; set; }
         public string KurumAdi { get; set; }
         public double OdemeTutar { get; set; } = 0;
 
@@ -17,5 +18,7 @@ namespace ExcelIslemler
 
         public string VegiKimlikNo { get; set; }
         public string Iban { get; set; }
+        public string extra { get; set; } 
+   
     }
 }
