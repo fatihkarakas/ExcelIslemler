@@ -16,5 +16,8 @@
         [Required]
         [StringLength(50)]
         public string Vkn { get; set; }
+
+
+        public byte IsActive { get; set; } = 1;
     }
 }
