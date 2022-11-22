@@ -47,10 +47,10 @@
             // ExcelBtn
             // 
             this.ExcelBtn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExcelBtn.Location = new System.Drawing.Point(4, 40);
-            this.ExcelBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ExcelBtn.Location = new System.Drawing.Point(3, 32);
+            this.ExcelBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ExcelBtn.Name = "ExcelBtn";
-            this.ExcelBtn.Size = new System.Drawing.Size(171, 34);
+            this.ExcelBtn.Size = new System.Drawing.Size(128, 28);
             this.ExcelBtn.TabIndex = 0;
             this.ExcelBtn.Text = "Excel Dosyasını Seç";
             this.ExcelBtn.UseVisualStyleBackColor = true;
@@ -62,6 +62,9 @@
             this.ExcelSonucView.AllowUserToAddRows = false;
             this.ExcelSonucView.AllowUserToDeleteRows = false;
             this.ExcelSonucView.AllowUserToOrderColumns = true;
+            this.ExcelSonucView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ExcelSonucView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ExcelSonucView.BackgroundColor = System.Drawing.Color.Azure;
             this.ExcelSonucView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -74,22 +77,22 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.ExcelSonucView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.ExcelSonucView.ColumnHeadersHeight = 28;
-            this.ExcelSonucView.Location = new System.Drawing.Point(4, 78);
-            this.ExcelSonucView.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ExcelSonucView.Location = new System.Drawing.Point(3, 63);
+            this.ExcelSonucView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ExcelSonucView.Name = "ExcelSonucView";
             this.ExcelSonucView.RowHeadersWidth = 35;
             this.ExcelSonucView.RowTemplate.Height = 24;
-            this.ExcelSonucView.Size = new System.Drawing.Size(968, 423);
+            this.ExcelSonucView.Size = new System.Drawing.Size(726, 344);
             this.ExcelSonucView.TabIndex = 1;
             this.ExcelSonucView.Visible = false;
             // 
             // button1
             // 
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Location = new System.Drawing.Point(182, 40);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Location = new System.Drawing.Point(136, 32);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(171, 34);
+            this.button1.Size = new System.Drawing.Size(128, 28);
             this.button1.TabIndex = 2;
             this.button1.Text = "DTO İşlemi Yap";
             this.button1.UseVisualStyleBackColor = true;
@@ -98,10 +101,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(362, 40);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Location = new System.Drawing.Point(272, 32);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(171, 34);
+            this.button2.Size = new System.Drawing.Size(128, 28);
             this.button2.TabIndex = 3;
             this.button2.Text = "Excel DTO Oluştur";
             this.button2.UseVisualStyleBackColor = true;
@@ -110,13 +113,14 @@
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.FormattingEnabled = true;
-            this.listView1.ItemHeight = 16;
-            this.listView1.Location = new System.Drawing.Point(1, 505);
-            this.listView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.listView1.Location = new System.Drawing.Point(1, 410);
+            this.listView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.listView1.Name = "listView1";
             this.listView1.ScrollAlwaysVisible = true;
-            this.listView1.Size = new System.Drawing.Size(971, 148);
+            this.listView1.Size = new System.Drawing.Size(729, 121);
             this.listView1.TabIndex = 4;
             // 
             // menuStrip1
@@ -130,43 +134,44 @@
             this.logKayıtlarıToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(982, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(736, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // anasayfaToolStripMenuItem
             // 
             this.anasayfaToolStripMenuItem.Name = "anasayfaToolStripMenuItem";
-            this.anasayfaToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
+            this.anasayfaToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.anasayfaToolStripMenuItem.Text = "Anasayfa";
             // 
             // hastaneİsimleriToolStripMenuItem
             // 
             this.hastaneİsimleriToolStripMenuItem.Name = "hastaneİsimleriToolStripMenuItem";
-            this.hastaneİsimleriToolStripMenuItem.Size = new System.Drawing.Size(129, 24);
+            this.hastaneİsimleriToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
             this.hastaneİsimleriToolStripMenuItem.Text = "Hastane İsimleri";
             this.hastaneİsimleriToolStripMenuItem.Click += new System.EventHandler(this.hastaneİsimleriToolStripMenuItem_Click);
             // 
             // hakkındaToolStripMenuItem
             // 
             this.hakkındaToolStripMenuItem.Name = "hakkındaToolStripMenuItem";
-            this.hakkındaToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
+            this.hakkındaToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.hakkındaToolStripMenuItem.Text = "Hakkında";
             this.hakkındaToolStripMenuItem.Click += new System.EventHandler(this.hakkındaToolStripMenuItem_Click);
             // 
             // logKayıtlarıToolStripMenuItem
             // 
             this.logKayıtlarıToolStripMenuItem.Name = "logKayıtlarıToolStripMenuItem";
-            this.logKayıtlarıToolStripMenuItem.Size = new System.Drawing.Size(106, 24);
+            this.logKayıtlarıToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.logKayıtlarıToolStripMenuItem.Text = "Log Kayıtları";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Azure;
-            this.ClientSize = new System.Drawing.Size(982, 659);
+            this.ClientSize = new System.Drawing.Size(736, 535);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -177,7 +182,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

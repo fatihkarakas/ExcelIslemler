@@ -107,7 +107,9 @@ namespace ExcelIslemler
             int sat = 0;
             DataSet Ds = new DataSet();
             SqlDataAdapter DT = new SqlDataAdapter();
-            List<HastaneBilgi> KurumAdlari = DtoContext.HastaneBilgi.ToList();
+            List<HastaneBilgi> KurumAdlari = DtoContext.HastaneBilgi.
+                Where(x=> x.IsActive==1)
+                .ToList();
            
 
             List<VeriKontrol> veri = new List<VeriKontrol>();
